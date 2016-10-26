@@ -1,0 +1,17 @@
+<div class="blog-post">
+    <h2 class="blog-post-title"><a href="{% url 'post_detail' blog_slug=object.blog.slug post_pk=object.id%}">{{ object.title }}</a></h2>
+    <p class="blog-post-meta">{{ object.timestamp|timesince }}
+        {{ object.author.username }}</p>
+        {% if object.author != request.user %}
+        <p class="blog-post-meta">Прочитано:<input type="checkbox" id="{{ object.id }}" class="isReaded"
+                {% if object in request.user.userprofile.read.all %}checked{% endif %}/>
+        {% if object.blog in request.user.userprofile.subs.all %}
+            <a href="" class="unsubscribe" id="{{ object.blog.id }}">Отписаться</a>
+        {% else %}
+            <a href="" class="subscribe" id="{{ object.blog.id }}">Подписаться</a>
+        {% endif %}
+        {% endif %}
+
+    </p>
+  <p>{{ object.body }}</p>
+</div>

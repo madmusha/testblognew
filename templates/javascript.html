@@ -1,0 +1,31 @@
+ <script>
+    $(document).ready(function() {
+        $(".isReaded").click(function(){
+            tagData = $(this).is(':checked');
+            pk = $(this).attr('id');
+            var request = $.ajax({
+                type:'GET',
+                url: "{% url 'readed' %}?tag=" + tagData + "&pk=" + pk,
+            })
+
+    })
+        $(".subscribe, .unsubscribe").click(function(event){
+            event.preventDefault();
+            label = $(this)
+            tagData = $(this).attr('class');
+            pk = $(this).attr('id');
+            var request = $.ajax({
+                type:'GET',
+                url: "{% url 'subs' %}?tag=" + tagData + "&pk=" + pk,
+            })
+            request.done(function(data){
+                                if (data.read == "success"){
+                                    label.attr('class', data.tag);
+                                    label.html(data.label);
+                                }
+                            })
+
+
+    })
+            })
+</script>
